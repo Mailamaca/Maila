@@ -1,0 +1,13 @@
+emergency_brake_topic_name: "/emergency_brake"
+driving_mode_topic_name: "/autonomous_driver"
+cmd_topic_name: "/hw/manual_cmd"
+joy_topic_name: "/joy"
+max_steering_angle:  0.25
+max_throttle: 1.0
+max_brake: 1.0
+emergency_brake_button_id: 4
+enable_autonomous_button_id: 0
+disable_autonomous_button_id: 1
+
+throttle_axel: 4
+steering_axel: 0

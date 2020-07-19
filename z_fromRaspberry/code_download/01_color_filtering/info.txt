@@ -1,0 +1,11 @@
+Using img01.jpg and img02.jpg, extracting green regions:
+
+RGB:
+10 90
+40 255
+0 60
+
+HSV:
+40 80
+60 255
+32 255

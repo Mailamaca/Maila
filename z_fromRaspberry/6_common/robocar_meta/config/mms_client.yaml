@@ -1,0 +1,27 @@
+ros_topic:
+  marginalized_cloud: "/arti_slam/marginalized_cloud"  
+  odom: "/arti_slam/odom"
+
+server:
+  broadcast_ip: "10.42.0.255"
+  port: 30001
+
+left_camera: # pose of left camera wrt base link
+  pitch: -0.1745 # 10 degree
+  tx: 0.28
+  ty: 0.085
+  tz: 0.2
+
+frames:
+  arti_map:     "/arti_map" 
+  left_camera:  "/left_camera"
+  base_footprint:    "/base_footprint"
+  base_link:         "/base_link" # center of rotation
+  broadcast_tf: true
+
+image:
+  width: 800
+  height: 400
+
+fake_speed: 0.8
+min_intensity: 1 # point with intensiry less than this are rejected

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch> 
+
+    <machine name="remote_laptop" address="Cles"      env-loader="/home/valerio/Desktop/TUM/Artisense/ros_env/jt_env.sh" user="valerio"/>  
+    <machine name="jetsonbox" address="jetsonbox"     env-loader="/home/jetson/workspace/catkin_ws/jt_env.sh" user="jetson"/>  
+    <machine name="raspberrypi" address="raspberrypi" env-loader="/home/pi/ros_env/pi_env.sh" user="pi"/>  
+
+</launch>

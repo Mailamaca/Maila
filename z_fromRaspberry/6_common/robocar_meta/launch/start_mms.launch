@@ -1,0 +1,3 @@
+<launch>
+    <node name="restart_slam" pkg="robocar_meta" type="start_mms.sh" output="screen"/>
+</launch>

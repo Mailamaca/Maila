@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch> 
+
+    <include file="$(find common_meta)/remote_launchmissions/machine_definition.launch" />
+  
+<!-- ************* RASPBERRY NODES  **************** -->
+
+    <group ns="raspberry">
+      <!-- control node -->      
+      <node machine="raspberrypi" name="control_node" pkg="control" type="control_node" output="screen">
+          <param name="control_type"     value="1" /> <!-- stanley lateral controller -->
+          <param name="longitudinal_control_type"     value="0" /> <!-- feed forward long ctrl -->
+
+          <rosparam command="load" file="$(find control)/config/car_params.yaml" /> <!--Load parameters from config files-->
+          <rosparam command="load" file="$(find control)/config/control.yaml" /> <!--Load parameters from config files-->
+          <rosparam command="load" file="$(find control)/config/topic.yaml" /> <!--Load parameters from config files-->
+      </node>
+
+  </group>
+</launch>

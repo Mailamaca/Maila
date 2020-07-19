@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<launch> 
+    <arg name="dev" default="/dev/input/js1"/>
+  
+    <include file="$(find robocar_meta)/missions/machine_definition.launch" />
+
+<!-- ************* LAPTOP NODES  **************** -->
+  <group ns="laptop">
+    <remap from="/laptop/joy" to="/joy"/>
+    <node name="joy_node" pkg="joy" type="joy_node">
+      <rosparam command="load" file="$(find robocar_meta)/config/joy.yaml" /> 
+      <param name="dev" value="$(arg dev)"/>
+    </node>
+  </group>
+
+
+<!-- ************* JETSONBOX NODES  **************** -->    
+    <group ns="jetsonbox">
+      <!-- MMS client -->
+      <node  machine="jetsonbox" name="mms_client_node" pkg="mms_client" type="mms_client_node" output="screen">
+      	<rosparam command="load" file="$(find robocar_meta)/config/mms_client.yaml" /> <!--Load parameters from config files-->
+      </node>
+
+
+    <!-- MOnitor -->
+    <arg name="machine_name" default="jetsonbox"/>
+    <arg name="config_file" default="$(find robocar_meta)/config/system_monitor.yaml"/>
+    <arg name="output" default="log"/>
+    <group ns="system_monitor/$(arg machine_name)">
+      <node machine="jetsonbox" name="cpu_monitor" pkg="system_monitor" type="cpu_monitor.py"
+        output="$(arg output)" respawn="true"/>
+      <node machine="jetsonbox" name="hdd_monitor" pkg="system_monitor" type="hdd_monitor.py"
+        output="$(arg output)" respawn="true"/>
+      <node machine="jetsonbox" name="mem_monitor" pkg="system_monitor" type="mem_monitor.py"
+        output="$(arg output)" respawn="true"/>
+    </group>
+    
+    <rosparam command="load" file="$(arg config_file)"
+      ns="system_monitor/$(arg machine_name)"/>
+  </group>
+
+  
+<!-- ************* RASPBERRY NODES  **************** -->
+    <group ns="raspberry">
+      <!-- hardware interface -->
+      <node machine="raspberrypi" name="hardware_interface_node" pkg="hardware_interface" type="hardware_interface_node" output="screen">
+      	<rosparam command="load" file="$(find robocar_meta)/config/hardware_interface.yaml" /> <!--Load parameters from config files-->
+      </node>
+      
+      <!-- teleop interface -->
+      <node machine="raspberrypi" name="teleop_interface_node" pkg="teleop_interface" type="teleop_interface_node" output="screen">
+      	<rosparam command="load" file="$(find robocar_meta)/config/teleop_interface.yaml" /> <!--Load parameters from config files-->
+      </node>
+
+      <!-- control node -->      
+      <node machine="raspberrypi" name="control_node" pkg="control" type="control_node" output="screen">
+          <param name="control_type"     value="1" /> <!-- stanley lateral controller -->
+          <param name="longitudinal_control_type"     value="0" /> <!-- feed forward long ctrl -->
+          <rosparam command="load" file="$(find robocar_meta)/config/control.yaml" /> <!--Load parameters from config files-->
+      </node>
+
+      <!-- lap counter node -->
+      <node machine="raspberrypi" pkg="lap_counter" type="lap_counter" args="" name="lap_counter_node">
+          <rosparam command="load" file="$(find robocar_meta)/config/lap_counter.yaml" />
+      </node>
+
+      <node machine="raspberrypi" pkg="dejavu_planner" type="dejavu_planner_node" args="" name="dejavu_planner_node"/>
+      
+      <!-- null transform track map -->
+      <node machine="raspberrypi" name="null_transform_track_pose_node" pkg="track_orientation" type="null_transform_node" output="screen"/>
+  </group>
+</launch>

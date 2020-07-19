@@ -1,0 +1,6 @@
+skidpad: False
+line_length: 1.0
+line_width: 0.1
+distance: 0.5
+max_lap_number: 2000
+

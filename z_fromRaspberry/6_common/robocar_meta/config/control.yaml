@@ -1,0 +1,50 @@
+node_rate: 30   # [Herz]
+
+ctrl_msg_comunication_delay: 0.005  # second from the transmission to the rec.
+steer_delay: 0.05    # actuation delay of the steering
+throttle_delay: 0.0  # actuation delay of the throttle
+
+# Feedforward conversion of acceleration as throttle
+feedforward_P:
+  kp: 0.2 # conversion acceleration topich to throttle
+  brake_cmd: 0.2 # throttle value to send when braking topic = True 
+
+# STANLEY CONTROLLER 
+stanley:
+  reference_point_front_axle_distance: 0.27   #x distance between odometry reference and front wheel 
+  steer_gain: 1 
+  kd_yaw: 0.1 # active damping
+  k_soft: 1 # value to add at the speed to compute steering angle due to position offset
+
+
+
+#------  TOPIC NAMES ------
+odometry_topic_name:  /arti_slam/odom #/gps/odom 
+open_path_topic_name: /waypoints/open_path
+loop_path_topic_name: /waypoints/closed_path
+
+stop_car_topic_name: /control/brake
+hardware_command_topic_name: /hw/autonomous_cmd
+visual_debug_topic_name: /control/debug_markers
+
+
+#------ CAR DYNAMICS PARAMS ------
+vehicle:
+  inertia:
+    g: 9.81 # [m/s2] gravitational acceleration
+    m: 5.0 # car mass
+    Iz: 1.0 # rotatin inertia
+
+  kinematics:
+    max_stering_angle: 25 # [deg]     
+    l: 0.26 # [m] wheel base
+    w: 0.3 # car width
+    w_front: 0.5 # weight front / total weight
+
+  drivetrain:
+    nm_wheels: 4.
+    r_dyn: 0.231
+    inertia: 0.4
+
+    cm1: 5000.
+    cr0: 180.

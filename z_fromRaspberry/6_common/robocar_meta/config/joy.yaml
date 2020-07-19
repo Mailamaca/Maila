@@ -1,0 +1,3 @@
+deadzone: 0.05
+autorepeat_rate : 10.0
+coalesce_interval: 0.001
