@@ -1,2 +1,0 @@
-INSTALLAZIONE ROS DA SOURCE HERE
-http://wiki.ros.org/melodic/Installation/Source
