@@ -17,27 +17,51 @@ printf "\n\n"
 #########################################
 cd $SCRIPT_DIR
 print_delim
-info "Setting up docker"
-
-# Clone the repository
-info "Cloning docker repository"
-git clone https://github.com/Mailamaca/Maila_docker.git .docker -b master
-
-cd .docker
-
-info "Building maila docker image"
-docker build -t maila-image .
+info "download maila docker image"
+docker pull maila/maila_dev:latest
 
 #########################################
 #   Download needed repositories 				#
 #########################################
+
+
+updateRepo (){ 
+    # from https://gist.github.com/nicferrier/2277987
+    
+    REPOSRC=$1
+    LOCALREPO=$2
+    BRANCH=$3
+
+    FOLDER=$(pwd)
+    
+    # We do it this way so that we can abstract if from just git later on
+    LOCALREPO_VC_DIR=$LOCALREPO/.git
+    
+    if [ ! -d $LOCALREPO_VC_DIR ]
+    then
+        info "${TAB}|-> Clonining ${REPOSRC}"
+        git clone $REPOSRC $LOCALREPO -b $BRANCH
+    else
+        info "${TAB}|-> Pulling ${REPOSRC}"
+        cd $LOCALREPO
+        git pull origin $BRANCH
+    fi
+    cd $FOLDER
+}
+
+
 cd $SCRIPT_DIR
 print_delim
 info "Downloading required repositories"
 mkcd "src"
 
-info "${TAB}|-> 01) Maila_ROSNode_MotorsInterface"
-git clone https://github.com/Mailamaca/Maila_ROSNode_MotorsInterface.git -b master
+updateRepo "https://github.com/Mailamaca/maila_msgs" "./maila_msgs" "master"
+updateRepo "https://github.com/Mailamaca/maila_srvs" "./maila_srvs" "master"
+updateRepo "https://github.com/Mailamaca/motors_interface" "./motors_interface" "master"
+updateRepo "https://github.com/Mailamaca/joystick_drivers" "./joystick_drivers" "master"
+updateRepo "https://github.com/Mailamaca/joystick_command" "./joystick_command" "master"
+updateRepo "https://github.com/Mailamaca/gps_umd" "./gps_umd" "master"
+
 
 #########################################
 #   Final message               				#
