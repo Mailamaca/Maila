@@ -1,3 +1,0 @@
-<launch>
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find robocar_meta)/rviz_config/base_config.rviz" />
-</launch>
