@@ -1,9 +1,9 @@
 # Maila the snail (Mailamaca)
-An open autonomous driving platform 
+An open source autonomous driving platform
 
                     o       o
-                     \_____/ 
-                     /=O=O=\     _______ 
+                     \_____/
+                     /=O=O=\     _______
                     /   ^   \   /\\\\\\\\
                     \ \___/ /  /\   ___  \
                      \_ V _/  /\   /\\\\  \

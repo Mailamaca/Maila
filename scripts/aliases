@@ -1,0 +1,131 @@
+#!/bin/bash
+
+####### MAILA ALIASES  #######
+alias MAILA_source="source ${MAILA_ROOT_DIR}/scripts/environment.sh"
+alias MAILA_cd="cd ${MAILA_ROOT_DIR}"
+alias MAILA_cds="cd ${MAILA_ROOT_DIR}"
+alias MAILA_cdd="cd ${MAILA_ROOT_DIR}/devel"
+alias MAILA_cdi="cd ${MAILA_ROOT_DIR}/install"
+
+alias MAILA_force_clean="MAILA_cd && rm -rf build/ install/ log/"
+MAILA_build() {
+  # https://index.ros.org/doc/ros2/Tutorials/Workspace/Creating-A-Workspace/
+  MAILA_cd
+  if [ $# == 0 ]; then
+    colcon build --symlink-install --event-handlers console_direct+
+  else
+    colcon build --symlink-install --event-handlers console_direct+ --packages-up-to $1
+  fi
+}
+####### END MAILA ALIASES  #######
+
+####### DOCKER ALIASES  #######
+## Docker 
+alias dlast="docker ps -lq" # Get last container id
+
+d_bash (){
+  docker exec -it maila-container bash
+}
+
+d_run () {
+  if [ $# == 0 ]; then
+    docker run --rm -it \
+      --name maila-container -h maila \
+      --user "$(id -u):$(id -g)" \
+      --mount type=bind,src="${MAILA_ROOT_DIR}",dst=/workspace \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      --env DISPLAY=$DISPLAY \
+      -p 2222:22 \
+      maila-image 
+  else
+    docker run --rm -it \
+      --name maila-container -h maila \
+      --user "$(id -u):$(id -g)" \
+      --mount type=bind,src="${MAILA_ROOT_DIR}",dst=/workspace \
+      -v /tmp/.X11-unix:/tmp/.X11-unix \
+      --env DISPLAY=$DISPLAY \
+      -p 2222:22 \
+      maila-image \
+      $1
+  fi
+
+}
+
+d_sudo_run () {
+  docker run --rm -it \
+    --name maila-container -h maila \
+    --user 0 \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --env DISPLAY=$DISPLAY \
+    -p 2222:22 \
+    maila-image
+}
+
+####### END DOCKER ALIASES  #######
+
+####### GENERAL ALIASES  #######
+
+## Give permission
+alias cx="chmod +x"
+
+## Create parent directories on demand
+alias mkdir='mkdir -pv'
+mkcd() { mkdir $1;cd $1; } ## Mkdir and cd
+
+## cd 
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+
+## clear the screen
+alias c='clear' 
+
+## untar FileName to unpack
+alias untar='tar -zxvf' 
+alias ls='ls --color=auto' # Colorize the ls output
+alias ll='ls -la' # Use a long listing format
+alias l.='ls -d .* --color=auto' # Show hidden files
+alias lt='ls --human-readable --size -1 -S --classify' #sort file by size
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+
+
+## Colorize diff output
+alias diff='colordiff' # install  colordiff package :)
+
+## handy short cuts
+alias h='history'
+
+## new set of commands
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+## Pings
+alias ping='ping -c 5' # Stop after sending count ECHO_REQUEST packets
+alias fastping='ping -c 100 -s.2' # Do not wait interval 1 second, go fast
+
+## APT
+alias apt-get="sudo apt-get"
+alias updatey="sudo apt-get --yes"
+alias update='sudo apt-get update && sudo apt-get upgrade'
+
+## Become root
+alias root='sudo -i'
+alias su='sudo -i'
+
+## Shotdown command
+alias reboot='sudo /sbin/reboot'
+alias poweroff='sudo /sbin/poweroff'
+alias halt='sudo /sbin/halt'
+alias shutdown='sudo /sbin/shutdown'
+####### END GENERAL ALIASES  #######
