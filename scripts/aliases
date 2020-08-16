@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ####### MAILA ALIASES  #######
-alias MAILA_source="source ${MAILA_ROOT_DIR}/scripts/environment.sh"
+alias MAILA_source="source ${MAILA_ROOT_DIR}/scripts/load_environment.sh"
 alias MAILA_cd="cd ${MAILA_ROOT_DIR}"
-alias MAILA_cds="cd ${MAILA_ROOT_DIR}"
-alias MAILA_cdd="cd ${MAILA_ROOT_DIR}/devel"
+alias MAILA_cds="cd ${MAILA_ROOT_DIR}/src"
 alias MAILA_cdi="cd ${MAILA_ROOT_DIR}/install"
 
 alias MAILA_force_clean="MAILA_cd && rm -rf build/ install/ log/"
+
 MAILA_build() {
   # https://index.ros.org/doc/ros2/Tutorials/Workspace/Creating-A-Workspace/
   MAILA_cd
@@ -36,7 +36,8 @@ d_run () {
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       --env DISPLAY=$DISPLAY \
       -p 2222:22 \
-      maila-image 
+      --entrypoint "echo \"source /home/snail/Workspace/Maila/scripts/load_environment.sh\" >> ~/.bashrc"
+      maila/maila_dev 
   else
     docker run --rm -it \
       --name maila-container -h maila \
@@ -45,7 +46,7 @@ d_run () {
       -v /tmp/.X11-unix:/tmp/.X11-unix \
       --env DISPLAY=$DISPLAY \
       -p 2222:22 \
-      maila-image \
+      maila/maila_dev \
       $1
   fi
 
@@ -58,7 +59,7 @@ d_sudo_run () {
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --env DISPLAY=$DISPLAY \
     -p 2222:22 \
-    maila-image
+    maila/maila_dev 
 }
 
 ####### END DOCKER ALIASES  #######
