@@ -12,7 +12,7 @@ Main repository to setup the Maila project. The Maila project wants to build an 
                     \____\____\______/
 ```
 
-## Aliases 
+## Aliases
 
 - `MAILA_build` alias to build the entire project
 - `MAILA_cd` navigate to the Maila root directory
@@ -52,3 +52,12 @@ If you want to automatically source the aliases at the end of `.bashrc` file add
 ```bash
 source <MAILA_DIR>/scripts/load_environment.sh
 ```
+
+## Style
+
+- for C++ .clang-format credits to DavetColemna [link](https://github.com/davetcoleman/roscpp_code_format/blob/master/.clang-format)
+
+
+## VS-Code integration
+
+- `f7` build all the packages
