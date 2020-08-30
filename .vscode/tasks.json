@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build all",
+            "type": "shell",
+            "command": "colcon",
+            "args": [
+                "build",
+                "--symlink-install",
+                "--cmake-args",
+                "'-DCMAKE_BUILD_TYPE=Debug'",
+                "'-DCMAKE_EXPORT_COMPILE_COMMANDS=ON'"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "source_ros_foxy"
+            ]
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "colcon test && colcon test-result",
+            "problemMatcher": [],
+            "dependsOn": [
+                "source_ros_foxy"
+            ]
+        },
+        {
+            // Source https://gist.github.com/calumroy/44934dd640f0da1658072f697f43e007
+            "label": "source_ros_foxy",
+            "type": "shell",
+            "command": "source",
+            "args": [
+                "/opt/ros/foxy/setup.bash"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
+// -DCMAKE_EXPORT_COMPILE_COMMANDS=1

@@ -1,0 +1,15 @@
+{
+    "python.pythonPath": "/bin/python3",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "C_Cpp.enhancedColorization": "Enabled",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+    "C_Cpp.loggingLevel": "Warning",
+    "colcon.provideTasks": true,
+    // Need to load the environment for the build
+    "terminal.integrated.shellArgs.linux": [
+        "-l",
+        "-i"
+    ],
+}
