@@ -1,0 +1,25 @@
+repositories:
+  gps_umd:
+    type: git
+    url: https://github.com/Mailamaca/gps_umd
+    version: master
+  joystick_command:
+    type: git
+    url: https://github.com/Mailamaca/joystick_command
+    version: master
+  joystick_drivers:
+    type: git
+    url: https://github.com/Mailamaca/joystick_drivers
+    version: master
+  maila_msgs:
+    type: git
+    url: https://github.com/Mailamaca/maila_msgs
+    version: master
+  maila_srvs:
+    type: git
+    url: https://github.com/Mailamaca/maila_srvs
+    version: master
+  motors_interface:
+    type: git
+    url: https://github.com/Mailamaca/motors_interface
+    version: master
