@@ -57,6 +57,8 @@
 		"--rm",
 		"--name", "maila-container-vsc",
 		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"--device=/dev/input:/dev/input",
+		"--device=/dev/ttyACM0:/dev/ttyACM0",
 		"--env","DISPLAY=:0"
 	]
 
