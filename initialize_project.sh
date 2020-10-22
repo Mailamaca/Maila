@@ -58,9 +58,9 @@ mkcd "src"
 updateRepo "https://github.com/Mailamaca/maila_msgs" "./maila_msgs" "master"
 updateRepo "https://github.com/Mailamaca/maila_srvs" "./maila_srvs" "master"
 updateRepo "https://github.com/Mailamaca/motors_interface" "./motors_interface" "master"
-updateRepo "https://github.com/Mailamaca/joystick_drivers" "./joystick_drivers" "master"
+updateRepo "https://github.com/Mailamaca/joystick_drivers" "./joystick_drivers" "dashing-devel"
 updateRepo "https://github.com/Mailamaca/joystick_command" "./joystick_command" "master"
-updateRepo "https://github.com/Mailamaca/gps_umd" "./gps_umd" "master"
+updateRepo "https://github.com/Mailamaca/gps_umd" "./gps_umd" "foxy_devel"
 
 
 #########################################
