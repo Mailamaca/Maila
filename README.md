@@ -61,3 +61,65 @@ source <MAILA_DIR>/scripts/load_environment.sh
 ## VS-Code integration
 
 - `f7` build all the packages
+
+
+# Setup of Rasperry on the Vehicle
+
+## install Ubuntu Server 20.04
+
+(ref: https://itsfoss.com/install-ubuntu-server-raspberry-pi/)
+
+- Write SD Card
+  
+- change file "system-boot/network-config" and add wifi SSID and password
+  
+```bash
+wifis:
+  wlan0:
+    dhcp4: true
+    optional: true
+    access-points:
+      "EssePi_24":
+      password: "your_wifi_password"
+```
+- change hostname to "maila-raspi"
+(ref: https://www.cyberciti.biz/faq/ubuntu-20-04-lts-change-hostname-permanently/)
+
+```bash
+sudo hostnamectl set-hostname maila-raspi
+sudo reboot
+```
+
+- change password to "ubuntu:ubuntu"
+(ref: https://www.cyberciti.biz/faq/change-a-user-password-in-ubuntu-linux-using-passwd/)
+
+```bash
+sudo passwd ubuntu
+----
+sudo reboot
+```
+
+- installing docker
+(ref: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+
+```bash
+sudo apt update
+sudo dpkg --configure -a
+sudo apt upgrade
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt update
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+sudo usermod -aG docker ${USER}
+sudo reboot
+```
+
+
+
+
+
+
