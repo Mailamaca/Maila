@@ -2,7 +2,7 @@ repositories:
   gps_umd:
     type: git
     url: https://github.com/Mailamaca/gps_umd
-    version: master
+    version: foxy_devel
   joystick_command:
     type: git
     url: https://github.com/Mailamaca/joystick_command
@@ -10,7 +10,7 @@ repositories:
   joystick_drivers:
     type: git
     url: https://github.com/Mailamaca/joystick_drivers
-    version: master
+    version: dashing-devel
   maila_msgs:
     type: git
     url: https://github.com/Mailamaca/maila_msgs
