@@ -4,31 +4,42 @@
 # 			     Set paths 				          #
 #########################################
 SCRIPT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)
-source ${SCRIPT_DIR}/scripts/load_environment.sh
+WORKIN_DIR=${SCRIPT_DIR}/..
 
-print_delim
-printf "\n"
-printf "Maila workspace initializer script\n"
-printf "Version 0.1 - 2020"
-printf "\n\n"
+# Load maila environment
+source ${WORKIN_DIR}/load_env.sh
+
+#########################################
+#   Install and config VScode   				#
+#########################################
+info "Setting up vscode"
+${SCRIPT_DIR}/setup_vs_code.sh
 
 #########################################
 #   Create the docker container 				#
 #########################################
-cd $SCRIPT_DIR
 print_delim
+cd $SCRIPT_DIR
 info "download maila docker image"
-docker pull maila/maila_dev:latest
+docker pull maila/maila-dev:latest
 
 #########################################
 #   Download needed repositories 				#
 #########################################
 
-cd $SCRIPT_DIR
 print_delim
-info "Downloading required repositories"
-mkcd "src"
-vcs import $SCRIPT_DIR/src < $SCRIPT_DIR/maila.repos
+cd $SCRIPT_DIR
+DIR="./src"
+if [ -d "$DIR" ]; then
+  ### Take action if $DIR exists ###
+  info "Found src folder, not importing defaul repositories in ${DIR}..."
+else
+  ###  Control will jump here if $DIR does NOT exists ###
+  info "${DIR} not found, downloading required repositories..."
+  mkdir ${WORKIN_DIR}/src
+  cd ${WORKIN_DIR}/src
+  vcs import $SCRIPT_DIR/src < $SCRIPT_DIR/.maila.repos
+fi
 
 #########################################
 #   Final message               				#

@@ -3,28 +3,37 @@
 //
 // https://code.visualstudio.com/docs/remote/devcontainerjson-reference
 {
-    "name": "maila-container-vsc",
+    "name": "maila-container",
     "containerName": "mailavsc",
     // Sets the run context to one level up instead of the .devcontainer folder.
     "context": ".",
     // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-    "image": "maila/maila_dev",
+    "image": "maila/maila-dev",
     // Set *default* container specific settings.json values on container create.
     "settings": {
         "terminal.integrated.shell.linux": null
     },
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-        "ms-azuretools.vscode-docker",
-        "ms-python.python",
-        "ms-vscode.cpptools",
-        "twxs.cmake",
-        "ms-vscode.cmake-tools",
-        "ms-iot.vscode-ros",
-        "smilerobotics.urdf",
-        "yzhang.markdown-all-in-one",
-        "cschlosser.doxdocgen",
-        "xaver.clang-format"
+      "ms-vscode.cpptools",
+      "jbenden.c-cpp-flylint",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "twxs.cmake",
+      "ms-vscode.cmake-tools",
+      "cheshirekow.cmake-format",
+      "streetsidesoftware.code-spell-checker",
+      "cschlosser.doxdocgen",
+      "vscode-icons-team.vscode-icons",  
+      "yzhang.markdown-all-in-one",
+      "DavidAnson.vscode-markdownlint",
+      "shd101wyy.markdown-preview-enhanced",
+      "MS-vsliveshare.vsliveshare-pack",
+      "karigari.chat",
+      "streetsidesoftware.code-spell-checker",
+      "cschlosser.doxdocgen",
+      "vscode-icons-team.vscode-icons",
+      "ms-python.python",
+      "ms-python.vscode-pylance"
     ],
     // Indicates whether VS Code should stop the container when the VS Code window is closed / shut down.
     "shutdownAction": "stopContainer",
@@ -51,7 +60,7 @@
     "runArgs": [
         "--rm",
         "--name",
-        "maila-container-vsc",
+        "maila-container",
         "-v",
         "/tmp/.X11-unix:/tmp/.X11-unix",
         "--env",

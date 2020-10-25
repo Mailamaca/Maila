@@ -1,4 +1,5 @@
 # Maila the snail (Mailamaca)
+
 Main repository to setup the Maila project. The Maila project wants to build an autonomous car model on top of  a traxxas summit rc car
 
 ```bash
@@ -14,65 +15,101 @@ Main repository to setup the Maila project. The Maila project wants to build an 
 
 ## Aliases
 
-- `MAILA_build` alias to build the entire project
-- `MAILA_cd` navigate to the Maila root directory
+### Docker
 
-## Requirements
+- `d_bash`  Connect current terminal to a running docker container
+- `d_run` Run the maila docker container
+
+### Folder navigation:
+
+- `MAILA_cd` = `cd <maila>/`
+- `MAILA_cds` = `cd <maila>/src`
+- `MAILA_cdd` = `cd <maila>/devel`
+- `MAILA_cdi` = `cd <maila>/install`
+
+### Code compilation
+
+- `MAILA_build` build the code
+- `MAILA_force_clean` clean the project
+
+### Miscellanea
+
+- `MAILA_source` source the MAILA environment
+
+## Setup the workspace
+
+### Requirements
 
 - Docker. To intall Docker follow the procedure reported [here](https://docs.docker.com/engine/install/ubuntu/)
+
 - Vcstool is a version control system (VCS) tool, designed to make working with multiple repositories easier. [link](https://github.com/dirk-thomas/vcstool)
 
-```bash
-sudo pip install vcstool
-```
+  ```shell
+  sudo pip install vcstool
+  ```
 
-or
+- Install [Visual Studio Code](https://code.visualstudio.com/)
 
-```bash
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xAB17C654
-sudo apt-get update
-sudo apt-get install python3-vcstool
-```
+### First Setup
 
-
-
-## Setup
-
-Download the docker image and the project scripts
+There is a handy installation script that clones the repository list contained in `.maila.repos`, install the necessary *Visual Studio Code* extension and load the environment. If an `src` folder already exist in the repository the clone step is skipped.
 
 ```bash
-git clone https://github.com/Mailamaca/Maila.git
-cd Maila
-./initialize_project.sh
+cd scripts/
+./init.sh
 ```
 
-If you want to automatically source the aliases at the end of `.bashrc` file add the follwing lines
+### Load environment
 
-```bash
-source <MAILA_DIR>/scripts/load_environment.sh
+To load the project aliases, the ros packages and environment variables run:
+
+```shell
+. load_env.sh
 ```
 
-## Style
+If you want to automatically source the maila environment add the step on`~/.bashrc` .
+
+## RANDOM STUFF TO CLEAN
+
+### Style
 
 - for C++ .clang-format credits to DavetColemna [link](https://github.com/davetcoleman/roscpp_code_format/blob/master/.clang-format)
 
-
-## VS-Code integration
+### VS-Code integration
 
 - `f7` build all the packages
 
+### Colcon commands
 
-# Setup of Rasperry on the Vehicle
+Build code
 
-## install Ubuntu Server 20.04
+```bash
+colcon build --symlink-install --cmake-args '-DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
+```
+
+Run test
+
+```bash
+colcon test
+colcon test-result
+```
+
+### Code formatting
+
+https://answers.ros.org/question/325019/is-there-a-clang-format-file-for-ros-2/
+
+https://github.com/ament/ament_lint/blob/26397786f603b8e9e4c3c399c3d33b1c6873ee0d/ament_clang_format/ament_clang_format/configuration/.clang-format
+
+## Setup of Rasperry on the Vehicle
+
+### install Ubuntu Server 20.04
 
 (ref: https://itsfoss.com/install-ubuntu-server-raspberry-pi/)
 
 - Write SD Card
-  
+
 - change file "system-boot/network-config" and add wifi SSID and password
-  
+
 ```bash
 wifis:
   wlan0:
@@ -82,6 +119,7 @@ wifis:
       "EssePi_24":
       password: "your_wifi_password"
 ```
+
 - change hostname to "maila-raspi"
 (ref: https://www.cyberciti.biz/faq/ubuntu-20-04-lts-change-hostname-permanently/)
 
