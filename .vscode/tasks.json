@@ -7,7 +7,7 @@
             "command": "bash",
             "args": [
                 "-c",
-                "colcon build --symlink-install --cmake-args '-DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON'"
+                "source ~/.bashrc && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
             ],
             "problemMatcher": [],
             "group": {
@@ -21,7 +21,7 @@
             "command": "bash",
             "args": [
                 "-c",
-                "colcon test && colcon test-result"
+                "source ~/.bashrc && colcon test && colcon test-result"
             ],
             "problemMatcher": []
         }
