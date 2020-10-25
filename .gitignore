@@ -5,3 +5,5 @@ build/
 log/
 src/
 
+**/*.orig
+
