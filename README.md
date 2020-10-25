@@ -234,8 +234,6 @@ valerioma:valerioma
 (ref: https://www.cactusvpn.com/tutorials/how-to-set-up-softether-vpn-client-on-linux/)
 (ref: https://serverfault.com/questions/586870/how-to-script-vpncmd-to-batch-command-connect-disconnect)
 
-```
-```
 - run container
 
 ```bash
@@ -247,19 +245,6 @@ docker run --rm -it \
       --mount type=bind,src="$PWD",dst=/home/snail/Maila \
       -p 2222:22 \
       maila/maila-dev
-```
-
-- install vpn
-
-```bash
-cd ~
-sudo apt update
-sudo apt install -y cmake gcc g++ libncurses5-dev libreadline-dev libssl-dev make zlib1g-dev
-git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
-cd SoftEtherVPN_Stable
-cp src/makefiles/linux_32bit.mak Makefile
-make -j4
-sudo make -j4 install
 ```
 
 - start vpn client batch file
@@ -279,13 +264,7 @@ AccountConnect mailavpn
 
 ```bash
 sudo vpnclient start
-sudo vpncmd localhost /client /in:vpnclient_batchstart.txt 
-```
-
-- get dhcp
-
-```bash
-sudo apt update && sudo apt install -y isc-dhcp-client
+sudo vpncmd localhost /client /in:vpnclient_batchstart.txt
 sudo /usr/sbin/dhclient
 ```
 
