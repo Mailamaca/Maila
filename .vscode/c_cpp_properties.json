@@ -4,23 +4,13 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/ros/foxy/include",
-                "/usr/local/include/",
-                "/usr/include/"
+                "/opt/ros/foxy/include/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c11",
+            "compilerPath": "/usr/bin/cc",
+            "cStandard": "c99",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64",
-            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
-            "browse": {
-                "path": [
-                    "${workspaceFolder}/src"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            }
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4

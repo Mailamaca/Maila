@@ -14,7 +14,6 @@ export MAILA_ROOT_DIR="${MAILA_ROOT_DIR}"
 export MAILA_IN_DOCKER="${MAILA_IN_DOCKER}"
 
 ### Load bash utility and aliases
-source ${MAILA_ROOT_DIR}/scripts/bash_utility
 source ${MAILA_ROOT_DIR}/scripts/aliases
 
 MAILA_logo

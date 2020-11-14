@@ -3,7 +3,10 @@
 install/
 build/
 log/
-src/
+
+# The first line excludes the top level from being ignored, and the second line ignores all subfolders.
+!src/
+src/*
 
 **/*.orig
 

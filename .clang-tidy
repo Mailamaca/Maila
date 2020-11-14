@@ -1,58 +1,51 @@
 ---
-# NOTE there must be no spaces before the '-', so put the comma last.
-# Source1 https://github.com/pytorch/pytorch/blob/master/.clang-tidy
-# Source2 https://github.com/llvm-mirror/llvm/blob/master/.clang-tidy
-InheritParentConfig: true
-Checks: '
--*,
-clang-diagnostic-*,
-bugprone-*,
--bugprone-forward-declaration-namespace,
--bugprone-macro-parentheses,
--bugprone-lambda-function-name,
-cppcoreguidelines-*,
--cppcoreguidelines-interfaces-global-init,
--cppcoreguidelines-owning-memory,
--cppcoreguidelines-pro-bounds-array-to-pointer-decay,
--cppcoreguidelines-pro-bounds-constant-array-index,
--cppcoreguidelines-pro-bounds-pointer-arithmetic,
--cppcoreguidelines-pro-type-cstyle-cast,
--cppcoreguidelines-pro-type-reinterpret-cast,
--cppcoreguidelines-pro-type-static-cast-downcast,
--cppcoreguidelines-pro-type-union-access,
--cppcoreguidelines-pro-type-vararg,
--cppcoreguidelines-special-member-functions,
-hicpp-exception-baseclass,
-hicpp-avoid-goto,
-modernize-*,
--modernize-return-braced-init-list,
--modernize-use-auto,
--modernize-use-default-member-init,
--modernize-use-using,
--modernize-use-trailing-return-type,
-performance-*,
--performance-noexcept-move-constructor,
-llvm-*,
-misc-*,
--misc-unused-parameters,
--misc-non-private-member-variables-in-classes,
-readability-identifier-naming'
+# TODO(henningkayser): Re-enable performance-unnecessary-value-param once #214 is resolved
+Checks:          '-*,
+                  performance-*,
+                  -performance-unnecessary-value-param,
+                  llvm-namespace-comment,
+                  modernize-redundant-void-arg,
+                  modernize-use-nullptr,
+                  modernize-use-default,
+                  modernize-use-override,
+                  modernize-loop-convert,
+                  readability-named-parameter,
+                  readability-redundant-smartptr-get,
+                  readability-redundant-string-cstr,
+                  readability-simplify-boolean-expr,
+                  readability-container-size-empty,
+                  readability-identifier-naming,
+                  '
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
 CheckOptions:
+  - key:             llvm-namespace-comment.ShortNamespaceLines
+    value:           '10'
+  - key:             llvm-namespace-comment.SpacesBeforeComments
+    value:           '2'
+  - key:             readability-braces-around-statements.ShortStatementLines
+    value:           '2'
+  # type names
   - key:             readability-identifier-naming.ClassCase
     value:           CamelCase
   - key:             readability-identifier-naming.EnumCase
     value:           CamelCase
-  - key:             readability-identifier-naming.FunctionCase
-    value:           camelBack
-  - key:             readability-identifier-naming.MemberCase
-    value:           CamelCase
-  - key:             readability-identifier-naming.ParameterCase
-    value:           CamelCase
   - key:             readability-identifier-naming.UnionCase
     value:           CamelCase
+  # method names
+  - key:             readability-identifier-naming.MethodCase
+    value:           camelBack
+  # variable names
   - key:             readability-identifier-naming.VariableCase
     value:           lower_case
-  - key:             readability-identifier-naming.ConstexprVariableCase
+  - key:             readability-identifier-naming.ClassMemberSuffix
+    value:           '_'
+  # const static or global variables are UPPER_CASE
+  - key:             readability-identifier-naming.EnumConstantCase
     value:           UPPER_CASE
-  - key:             readability-identifier-naming.NamespaceCase
-    value:           lower_case
+  - key:             readability-identifier-naming.StaticConstantCase
+    value:           UPPER_CASE
+  - key:             readability-identifier-naming.ClassConstantCase
+    value:           UPPER_CASE
+  - key:             readability-identifier-naming.GlobalVariableCase
+    value:           UPPER_CASE
