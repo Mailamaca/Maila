@@ -156,6 +156,46 @@ sudo usermod -aG docker ${USER}
 sudo reboot
 ```
 
+### add i2c grups
+(ref: https://lexruee.ch/setting-i2c-permissions-for-non-root-users.html)
+
+- software
+```bash
+sudo apt-get install -y i2c-tools
+```
+
+- setup i2c user permission
+```bash
+ls /dev/i2c-1 -l
+sudo chown :ubuntu /dev/i2c-1
+sudo chmod g+rw /dev/i2c-1
+```
+
+- add udev rule
+```bash
+su root
+echo 'KERNEL=="i2c-[0-9]*", OWNER="ubuntu", GROUP="ubuntu", MODE="0660"' >> /etc/udev/rules.d/90-local_ubuntu_group.rules
+```
+
+- reboot and test it
+```bash
+i2cdetect -y 1
+```
+
+### add joy if needed
+
+- setup i2c user permission on the pc and then starts the container
+```bash
+ls /dev/input -l
+sudo chown :ubuntu /dev/input/js0
+```
+
+- if container is already started
+```bash
+ls /dev/input -l
+sudo chown :snail /dev/input/js0
+```
+
 ## Setup VPN server
 (ref: https://www.raspberrypi.org/forums/viewtopic.php?t=262264)
 (ref: https://www.cactusvpn.com/tutorials/how-to-set-up-softether-vpn-client-on-linux/)
@@ -308,6 +348,22 @@ docker run --rm -it \
 
 sudo service ssh start
 
+```
+
+```bash
+ export IMAGE_NAME=maila/maila-dev
+ docker run --rm -it \
+     --cap-add NET_ADMIN \
+     --device /dev/net/tun \
+     --device /dev/i2c-1 \
+     --device /dev/input/js0 \
+     --name maila-container -h maila \
+     --user "$(id -u):$(id -g)" \
+     --mount type=bind,src=/home/ubuntu/Projects/Maila,dst=/home/snail/Maila \
+     -v /tmp/.X11-unix:/tmp/.X11-unix \
+     --env DISPLAY=$DISPLAY \
+     -p 2222:22 \
+     ${IMAGE_NAME}
 ```
 
 ## run maila-dev on pc
