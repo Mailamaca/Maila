@@ -274,6 +274,8 @@ valerioma:valerioma
 (ref: https://www.cactusvpn.com/tutorials/how-to-set-up-softether-vpn-client-on-linux/)
 (ref: https://serverfault.com/questions/586870/how-to-script-vpncmd-to-batch-command-connect-disconnect)
 
+
+
 - run container
 
 ```bash
@@ -285,6 +287,17 @@ docker run --rm -it \
       --mount type=bind,src="$PWD",dst=/home/snail/Maila \
       -p 2222:22 \
       maila/maila-dev
+```
+
+- download and install
+```bash
+sudo apt install -y cmake gcc g++ libncurses5-dev libreadline-dev libssl-dev make zlib1g-dev
+git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
+cd SoftEtherVPN_Stable
+# ./configure # error during make "-m64 unrecognized", installing as 32bit
+cp src/makefiles/linux_32bit.mak Makefile
+make -j4
+sudo make -j4 install
 ```
 
 - start vpn client batch file
@@ -305,6 +318,8 @@ AccountConnect mailavpn
 ```bash
 sudo vpnclient start
 sudo vpncmd localhost /client /in:vpnclient_batchstart.txt
+
+sudo apt install -y isc-dhcp-client
 sudo /usr/sbin/dhclient
 ```
 
@@ -360,6 +375,22 @@ sudo service ssh start
      --name maila-container -h maila \
      --user "$(id -u):$(id -g)" \
      --mount type=bind,src=/home/ubuntu/Projects/Maila,dst=/home/snail/Maila \
+     -v /tmp/.X11-unix:/tmp/.X11-unix \
+     --env DISPLAY=$DISPLAY \
+     -p 2222:22 \
+     ${IMAGE_NAME}
+```
+
+```bash
+ export IMAGE_NAME=maila/maila-dev
+ docker run --rm -it \
+     --cap-add NET_ADMIN \
+     --device /dev/net/tun \
+     --device /dev/i2c-1 \
+     --name maila-container -h maila \
+     --user "$(id -u):$(id -g)" \
+     --mount type=bind,src=/home/ubuntu/Projects/Maila,dst=/home/snail/Maila \
+      --mount type=bind,src=/home/ubuntu/SoftEtherVPN_Stable,dst=/home/snail/vpn \
      -v /tmp/.X11-unix:/tmp/.X11-unix \
      --env DISPLAY=$DISPLAY \
      -p 2222:22 \
