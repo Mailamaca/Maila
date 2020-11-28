@@ -1,5 +1,5 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
-// https://www.allisonthackston.com/articles/vscode_docker_ros2.html 
+// https://www.allisonthackston.com/articles/vscode_docker_ros2.html
 {
     "name": "maila-dev-vscode",
     "containerName": "mailavsc",
@@ -11,7 +11,7 @@
         }
     },
     // This will launch the container as a non-root user
-    "remoteUser": "ros",
+    "remoteUser": "snail",
     "runArgs": [
         "--rm",
         "--name=maila-dev-vscode",
@@ -19,7 +19,6 @@
         "--cap-add=SYS_PTRACE",
         "--security-opt=seccomp:unconfined",
         "--security-opt=apparmor:unconfined",
-        "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
     ],
     "containerEnv": {
         "DISPLAY": "${localEnv:DISPLAY}"
@@ -42,15 +41,23 @@
         "ms-python.python",
         "ms-python.vscode-pylance"
     ],
+    "mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+        "source=${localEnv:HOME}/.bash_aliases,target=/home/snail/.bash_aliases,type=bind",
+        "source=vscode-server,target=/home/code/.vscode-server,type=volume",
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
+    ],
     // stop the container when the VS Code window is closed / shut down.
     "shutdownAction": "stopContainer",
     // set up-folder as workspace
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/snail/Workspace/Maila,type=bind,consistency=cached",
-    "workspaceFolder": "/home/snail/Workspace/Maila",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/snail/ros_workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/home/snail/ros_workspace",
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [
-        "2222:22"
-    ],
+    // "forwardPorts": [
+    //     2222
+    // ],
+    // use the appPort property to publish ports to the host.
+    "appPort": ["2222:22" ],
     // Uncomment the next line to run commands after the container is created - for example installing curl.
     "postCreateCommand": "echo \"source /opt/ros/$ROS_DISTRO/setup.bash\" >> ~/.bashrc",
     // Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
