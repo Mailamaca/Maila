@@ -29,17 +29,18 @@ docker pull maila/maila-dev:latest
 
 print_delim
 cd $SCRIPT_DIR
-DIR="./src"
-if [ -d "$DIR" ]; then
+SCR_DIR="${WORKIN_DIR}/src"
+if [ -d "${SCR_DIR}" ]; then
   ### Take action if $DIR exists ###
-  info "Found src folder, not importing defaul repositories in ${DIR}..."
+  info "Found src folder, updating required repositories in ${SCR_DIR}..."
 else
   ###  Control will jump here if $DIR does NOT exists ###
-  info "${DIR} not found, downloading required repositories..."
-  mkdir ${WORKIN_DIR}/src
-  cd ${WORKIN_DIR}/src
-  vcs import $SCRIPT_DIR/src < $SCRIPT_DIR/.maila.repos
+  info "${SCR_DIR} not found, downloading required repositories..."
+  mkdir ${WORKIN_DIR}/src  
 fi
+
+cd ${SCR_DIR}
+vcs import ${SCR_DIR} < ${WORKIN_DIR}/.maila.repos
 
 #########################################
 #   Final message               				#

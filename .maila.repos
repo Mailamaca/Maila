@@ -23,3 +23,11 @@ repositories:
     type: git
     url: https://github.com/Mailamaca/motors_interface
     version: master
+  i2c_interfaces:
+    type: git
+    url: https://github.com/Mailamaca/i2c_interfaces
+    version: master
+  i2c_server:
+    type: git
+    url: https://github.com/Mailamaca/i2c_server
+    version: master
