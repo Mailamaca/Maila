@@ -13,30 +13,7 @@ Main repository to setup the Maila project. The Maila project wants to build an 
                     \____\____\______/
 ```
 
-## Aliases
-
-### Docker
-
-- `d_bash`  Connect current terminal to a running docker container
-- `d_run` Run the maila docker container
-
-### Folder navigation:
-
-- `MAILA_cd` = `cd <maila>/`
-- `MAILA_cds` = `cd <maila>/src`
-- `MAILA_cdd` = `cd <maila>/devel`
-- `MAILA_cdi` = `cd <maila>/install`
-
-### Code compilation
-
-- `MAILA_build` build the code
-- `MAILA_force_clean` clean the project
-
-### Miscellanea
-
-- `MAILA_source` source the MAILA environment
-
-## Setup the workspace
+## Setup
 
 ### Requirements
 
@@ -59,6 +36,55 @@ cd scripts/
 ./init.sh
 ```
 
+### Running docker
+
+The `remove_envoronment.sh` script contains function to ease the process of running the docker image realized to support the development of the Maila software. There are 2 ways to interact with the system
+
+- using visual studio code: here visual studio code will run the docker image and eventually we can use external terminal to connect to this images. For this just open vs-code in the workspace directory and let the *ms-vscode-remote.remote-containers*  code extension to build and start the container for you.
+
+  ```sh
+  code ./
+  ```
+
+- manual: we can start the container manually. At first `source remote_environment.sh` this will load a set of bash function that will speed up the process and then:
+
+  - `d_build` to build the image
+  - `d_run` to run the image in a container
+
+### Connecting to a running istance
+
+When you have a running instance of the development docker when `source  emote_environment.sh`  the script will automatically attach to the running container. Alternatively if the source were done before running the container you could also use the function `d_attach` to attach to a running container
+
+## Utility
+
+When attaching to the docker console a set of aliases are loaded to ease the development
+
+### Folder navigation:
+
+- `MAILA_cd` = `cd <maila>/`
+- `MAILA_cds` = `cd <maila>/src`
+- `MAILA_cdd` = `cd <maila>/devel`
+- `MAILA_cdi` = `cd <maila>/install`
+
+### Code compilation
+
+- `MAILA_build` build the code
+- `MAILA_force_clean` clean the project
+
+### Miscellanea
+
+- `MAILA_source` source the MAILA environment
+
+
+
+---------------
+
+-----------------------
+
+## RANDOM STUFF TO CLEAN
+
+## Setup the workspace
+
 ### Load environment
 
 To load the project aliases, the ros packages and environment variables run:
@@ -68,8 +94,6 @@ To load the project aliases, the ros packages and environment variables run:
 ```
 
 If you want to automatically source the maila environment add the step on`~/.bashrc` .
-
-## RANDOM STUFF TO CLEAN
 
 ### Style
 
@@ -328,102 +352,4 @@ sudo /usr/sbin/dhclient
 ```bash
 ros2 run demo_nodes_cpp talker
 ros2 run demo_nodes_cpp listener
-```
-
-## run maila on docker image
-
-- download maila repo 
-
-```bash
-cd ~
-mkdir Projects
-cd Projects
-git clone https://github.com/Mailamaca/Maila.git
-cd Maila
-```
-
-- pull image from DockerHub
-
-```bash
-docker pull maila/maila-dev
-```
-
-- run the container and start ssh
-
-```bash
-docker run --rm -it \
-      --cap-add NET_ADMIN \
-      --device /dev/net/tun \
-      --mount type=bind,src=/home/ubuntu/SoftEtherVPN_Stable,dst=/home/snail/SoftEtherVPN_Stable \
-      --name maila-dev-container -h maila \
-      --user "$(id -u):$(id -g)" \
-      --mount type=bind,src="$PWD",dst=/home/snail/Maila \
-      -p 2222:22 \
-      maila/maila-dev
-
-sudo service ssh start
-
-```
-
-```bash
- export IMAGE_NAME=maila/maila-dev
- docker run --rm -it \
-     --cap-add NET_ADMIN \
-     --device /dev/net/tun \
-     --device /dev/i2c-1 \
-     --device /dev/input/js0 \
-     --name maila-container -h maila \
-     --user "$(id -u):$(id -g)" \
-     --mount type=bind,src=/home/ubuntu/Projects/Maila,dst=/home/snail/Maila \
-     -v /tmp/.X11-unix:/tmp/.X11-unix \
-     --env DISPLAY=$DISPLAY \
-     -p 2222:22 \
-     ${IMAGE_NAME}
-```
-
-```bash
- export IMAGE_NAME=maila/maila-dev
- docker run --rm -it \
-     --cap-add NET_ADMIN \
-     --device /dev/net/tun \
-     --device /dev/i2c-1 \
-     --name maila-container -h maila \
-     --user "$(id -u):$(id -g)" \
-     --mount type=bind,src=/home/ubuntu/Projects/Maila,dst=/home/snail/Maila \
-      --mount type=bind,src=/home/ubuntu/SoftEtherVPN_Stable,dst=/home/snail/vpn \
-     -v /tmp/.X11-unix:/tmp/.X11-unix \
-     --env DISPLAY=$DISPLAY \
-     -p 2222:22 \
-     ${IMAGE_NAME}
-```
-
-## run maila-dev on pc
-
-```bash
-docker run --rm -it \
-      --cap-add NET_ADMIN \
-      --device /dev/net/tun \
-      --name maila-dev-container -h maila \
-      --user "$(id -u):$(id -g)" \
-      --mount type=bind,src="$PWD",dst=/home/snail/Maila \
-      -p 2222:22 \
-      maila/maila-dev
-
-```
-
-```bash
-cd ~
-sudo apt update
-sudo apt install -y cmake gcc g++ libncurses5-dev libreadline-dev libssl-dev make zlib1g-dev
-git clone https://github.com/SoftEtherVPN/SoftEtherVPN_Stable.git
-cd SoftEtherVPN_Stable
-./configure
-#cp src/makefiles/linux_64bit.mak Makefile
-make -j4
-sudo make -j4 install
-```
-
-```
-sudo apt install isc-dhcp-client
-sudo /usr/sbin/dhclient
 ```

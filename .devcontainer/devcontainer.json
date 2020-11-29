@@ -7,18 +7,23 @@
     "dockerFile": "Dockerfile",
     "build": {
         "args": {
-            "WORKSPACE": "${containerWorkspaceFolder}"
+            "WORKSPACE": "${containerWorkspaceFolder}",
+      			"USER_ID": "1001",
+      			"GROUP_ID": "1001",
         }
     },
     // This will launch the container as a non-root user
     "remoteUser": "snail",
     "runArgs": [
         "--rm",
-        "--name=maila-dev-vscode",
+        "--name=vsc-maila-container",
         "--network=host",
         "--cap-add=SYS_PTRACE",
         "--security-opt=seccomp:unconfined",
         "--security-opt=apparmor:unconfined",
+        "--device=/dev/dri/card0:/dev/dri/card0",
+        "-e DISPLAY=${localEnv:DISPLAY}",
+        "-e XAUTHORITY=/tmp/.docker.xauth"
     ],
     "containerEnv": {
         "DISPLAY": "${localEnv:DISPLAY}"
@@ -44,8 +49,9 @@
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
         "source=${localEnv:HOME}/.bash_aliases,target=/home/snail/.bash_aliases,type=bind",
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+        "source=/tmp/.docker.xauth,target=/tmp/.docker.xauth,type=bind",
         "source=vscode-server,target=/home/code/.vscode-server,type=volume",
-        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind"
     ],
     // stop the container when the VS Code window is closed / shut down.
     "shutdownAction": "stopContainer",
